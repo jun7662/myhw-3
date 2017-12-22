@@ -160,12 +160,13 @@ m_realloc(void* ptr, size_t size)
 	if(block->size >= size){
 		if(block->size - m_size >= META_SIZE){
 		  p_meta prev_block = block;
-		  block->free = 1;
+
 		  block = (void*)(prev_block) + m_size + META_SIZE;
 		  block->size = prev_block->size -m_size- META_SIZE;
 		  block->next = prev_block->next;
 		  block->prev = prev_block;
 		  block->next->prev= block;
+		  block->free = 1;
 		  prev_block->next = block;
 		  prev_block->size = m_size;
 		  block = prev_block;		
